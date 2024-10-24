@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 export default function App() {
 
 
-  const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS)
+  const [flashcards, setFlashcards] = useState([])
   const [totalquestions, setTotalquestions] = useState([])
 
     const [category, setCategory] = useState([])
@@ -148,48 +148,6 @@ export default function App() {
   
 }
 
-
-const SAMPLE_FLASHCARDS = [
-  {
-    id: 1,
-    question: "How much is 2 + 2?",
-    answer: 4,
-    options: [
-      2,
-      3,
-      4,
-      5
-    ]
-
-  },
-  {
-    id: 2,
-    question: "Whats the real answer?",
-    answer: "answer 2",
-    options: [
-      "answer",
-      "answer 2",
-      "answer 3",
-      "answer 4"
-    ]
-
-  },
-
-  {
-    id: 3,
-    question: "What anime has more chapters?",
-    answer: "One Piece",
-    options: [
-      "Noragami",
-      "Dragon Ball",
-      "One Piece",
-      "AOT"
-    ]
-
-  }
-
-
-]
 
 
 
