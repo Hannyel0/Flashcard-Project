@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+
+*{
+    font-family: "Roboto", sans-serif;
+}
+
 body{
     background-color: #ebebeb;
     margin: 0;
@@ -38,13 +45,23 @@ body{
     color: white;
     padding: .5rem 1em;
     border-radius: .3em;
+    font-weight: 700;
     border: none;
     cursor: pointer;
+}
+
+.global-question-amount{
+    display: flex;
+    justify-content: center;
+}
+
+.global-amount{
+    font-size: 1.4rem;
 }
 .card-grid{
     display: grid;
     align-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 1rem;
 }
 

@@ -11,6 +11,7 @@ export default function App() {
 
 
   const [flashcards, setFlashcards] = useState(SAMPLE_FLASHCARDS)
+  const [totalquestions, setTotalquestions] = useState([])
 
     const [category, setCategory] = useState([])
 
@@ -19,6 +20,15 @@ export default function App() {
   useEffect(()=>{
 
     requestCategories()
+
+    setTimeout(() => {
+      requestCards()
+    }, 1000);
+
+    setTimeout(()=>{
+      requestGlobalQuestions()
+    }, 1000)
+    
   
     
   },[])
@@ -31,29 +41,37 @@ export default function App() {
     function handlesubmit (e){
         e.preventDefault()
 
-        axios
-        .get('https://opentdb.com/api.php', {
-          params:{
-            amount: amountEl.current.value,
-            category: categoryEl.current.value
-          }
-        })
-        .then(res =>{
-          const formattedFlashcards = res.data.results.map( questionItem =>{
-    
-            const answer = decodeString(questionItem.correct_answer) 
-            const options = [...questionItem.incorrect_answers.map(option => decodeString(option)), answer]
-            return{
-              id: uuidv4(),
-              question: decodeString(questionItem.question),
-              answer: answer,
-              options: options.sort(()=> Math.random() - .5)
-            }
-            
-          })
-          setFlashcards(formattedFlashcards)
-        })
+        
+        setTimeout(() => {
+          requestCards()
+        }, 2000);
+        
     }
+
+    function requestCards() {
+      axios
+    .get('https://opentdb.com/api.php', {
+      params:{
+        amount: amountEl.current.value,
+        category: categoryEl.current.value
+      }
+    })
+    .then(res =>{
+      const formattedFlashcards = res.data.results.map( questionItem =>{
+
+        const answer = decodeString(questionItem.correct_answer) 
+        const options = [...questionItem.incorrect_answers.map(option => decodeString(option)), answer]
+        return{
+          id: uuidv4(),
+          question: decodeString(questionItem.question),
+          answer: answer,
+          options: options.sort(()=> Math.random() - .5)
+        }
+        
+      })
+      setFlashcards(formattedFlashcards)
+    })
+    } 
 
     
       function decodeString (string){
@@ -61,6 +79,18 @@ export default function App() {
         textArea.innerHTML = string
         return textArea.value
     
+      }
+
+  
+      function requestGlobalQuestions (){
+        axios
+        .get('https://opentdb.com/api_count_global.php')
+        .then(res =>{
+          const totalAMoutofQuestions = res.data.overall
+          
+          setTotalquestions(totalAMoutofQuestions)
+        })
+        
       }
 
   
@@ -103,6 +133,9 @@ export default function App() {
         </div>
     </form>
     <div className="container">
+      <div className="global-question-amount">
+        <p className='global-amount'>There are <strong>{totalquestions.total_num_of_verified_questions}</strong> questions available in the DataBase</p>
+      </div>
       <FlashCardList flashcards = {flashcards}/>
     </div>
     </>
